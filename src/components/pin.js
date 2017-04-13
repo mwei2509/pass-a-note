@@ -77,7 +77,10 @@ export default class Pin extends Component{
     let buttonStyle={
       background: "none",
       border: "none",
-      outline: "none"
+      outline: "none",
+      margin: 0,
+      padding: 0,
+      display: "block"
     }
 
     return(

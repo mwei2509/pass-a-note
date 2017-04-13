@@ -85,15 +85,27 @@ class Notepad extends Component{
   intro(){
     const style={
       paddingTop: 50,
-      opacity: .2,
+      opacity: .7,
       textAlign: "Center",
-      fontFamily: "Libre Baskerville",
-      fontSize: 70,
-      margin:"auto"
+      margin:"auto",
+      textShadow: "-1px -1px 1px rgba(255,255,255,0.5), 1px 1px 1px rgba(0,0,0,0.5)",
+    	color: "#ECDED9"
+    }
+
+    const crim={
+      fontFamily: "Crimson Text",
+      lineHeight: .9,
+      fontSize: 80,
+    }
+
+    const mont={
+      fontFamily: "Montserrat",
+      fontWeight: 200,
+      fontSize: 60
     }
     return(
       <div style={style}>
-        Double click to type <br />anywhere on the page.
+        <span style={crim}>pass a note by double clicking <br />anywhere on the page</span>
       </div>
     )
   }
