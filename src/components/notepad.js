@@ -112,6 +112,8 @@ class Notepad extends Component{
                 x={pin.x}
                 y={pin.y}
                 id={pin.id}
+                text={pin.text}
+                max={pin.max}
                 opacity={pin.opacity}
                 fontWeight={pin.fontWeight}
                 fontSize={pin.fontSize}

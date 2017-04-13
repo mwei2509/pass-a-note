@@ -21,7 +21,11 @@ export default class Pin extends Component{
       text:e.target.value,
       max: max,
       focus: true
+    },()=>{this.props.store.dispatch({
+      type: "UPDATE_TEXT",
+      pin: {id: this.props.id, text: this.state.text, max: this.state.max}
     })
+  })
   }
 
   onFocus(e){
@@ -60,6 +64,7 @@ export default class Pin extends Component{
       outline: "none",
       background: "none",
       border: "none",
+      color: "#1D0F29",
       fontFamily: this.props.fontFamily,
       fontWeight: this.props.fontWeight,
       lineHeight: .95,
@@ -97,10 +102,11 @@ export default class Pin extends Component{
         <Textarea autoFocus
           type="text"
           style={inputStyle}
+          value={this.props.text}
           onBlur={(e)=>this.onBlur(e)}
           onChange={(e)=>this.onChange(e)}
           onFocus={(e)=>this.onFocus(e)}
-          cols={this.state.max ? this.state.max+3:1}
+          cols={this.props.max ? this.props.max+3:1}
           />
       </div>
     </Draggable>

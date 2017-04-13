@@ -12,6 +12,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Montserrat";
+  color: #1D0F29;
 }
 
 .hide{
@@ -19,6 +20,6 @@ body {
 }
 
 .paper{
-  background: #EFF5F1;
-  background: linear-gradient(150deg, #FFFFCE, #DDF3F5);
+  background: #FFE5DA;
+  background: linear-gradient(130deg, #F8E8E4, #FBFBEC);
 }
