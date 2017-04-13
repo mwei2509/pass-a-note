@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import makePins from './reducers/makepins'
 
-let store = createStore(makePins)
+let store = createStore(makePins, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 ReactDOM.render(
   <Provider store={store}>

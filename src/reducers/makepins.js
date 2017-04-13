@@ -14,6 +14,17 @@ export default function makePins(state={pins: []}, action){
       }
     })})
       return newstate
+    case 'MOVE_PIN':
+      let newState = Object.assign({}, state, {pins: state.pins.map(pin=>{
+        if (pin.id === action.pin.id){
+          console.log(`old - x: ${pin.x}, y: ${pin.y}`)
+          console.log(`new - x: ${action.pin.x}, y: ${action.pin.y}`)
+          return Object.assign({}, pin, {x: action.pin.x, y: action.pin.y})
+        }else{
+          return pin
+        }
+      })})
+      return newState
     case 'DELETE_PIN':
       return {pins: state.pins.filter(pin=>(pin.id !== action.id))}
     default:

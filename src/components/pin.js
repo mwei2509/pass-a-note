@@ -10,7 +10,8 @@ export default class Pin extends Component{
     this.state={
       text: '',
       max: 0,
-      focus: true
+      focus: true,
+      hide: false
     }
   }
 
@@ -26,6 +27,16 @@ export default class Pin extends Component{
       pin: {id: this.props.id, text: this.state.text, max: this.state.max}
     })
   })
+  }
+
+  getCoords(e){
+    let id = this.props.id
+    let div = this.refs[id]
+    this.props.store.dispatch({
+      type: "MOVE_PIN",
+      pin: {id: this.props.id, x: div.getBoundingClientRect().left, y: div.getBoundingClientRect().top}
+    })
+
   }
 
   onFocus(e){
@@ -47,12 +58,26 @@ export default class Pin extends Component{
     })
   }
 
+  hidePin(){
+    this.setState({
+      hide: true
+    })
+  }
+
   render(){
-    const style={
-      position: 'absolute',
-      top: this.props.y,
-      left: this.props.x,
+    if(this.props.id==1){
+      console.log(`props- x: ${this.props.x}, y: ${this.props.y}`)
+      let div = this.refs[1]
+      if(div){
+        console.log(`currently- x: ${div.getBoundingClientRect().left}, y: ${div.getBoundingClientRect().top}`)
+      }
     }
+    const style={
+      position: 'fixed',
+      top: this.props.y,
+      left: this.props.x
+    }
+
     let operations={
       position: "absolute",
       bottom: -10,
@@ -85,6 +110,7 @@ export default class Pin extends Component{
     }
 
     return(
+      // <div ref={this.props.id} id="main" style={style}>
       <Draggable
         axis="both"
         handle=".handle"
@@ -95,11 +121,11 @@ export default class Pin extends Component{
         onStart={this.handleStart}
         onDrag={this.handleDrag, (e)=>this.onFocus(e)}
         onStop={this.handleStop, (e)=>this.onBlur(e)}>
-      <div style={style}>
+      <div className={this.state.hide ? "hide" : null} ref={this.props.id} id="main" style={style}>
           <div style={operations}><button
             className={this.state.focus ? null : "hide"}
             style={buttonStyle}
-            onClick={()=>this.deletePin()}>x</button>
+            onClick={this.hidePin.bind(this)}>x</button>
           <button
             className={this.state.focus ? "handle": "handle hide"}
             style={buttonStyle}>o</button></div>
@@ -110,7 +136,7 @@ export default class Pin extends Component{
           onBlur={(e)=>this.onBlur(e)}
           onChange={(e)=>this.onChange(e)}
           onFocus={(e)=>this.onFocus(e)}
-          cols={this.props.max ? this.props.max:1}
+          cols={this.props.max ? this.props.max * 1.1:1 }
           />
       </div>
     </Draggable>
