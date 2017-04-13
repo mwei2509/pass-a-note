@@ -14,16 +14,70 @@ class Notepad extends Component{
     let x = e.clientX;
     let y = e.clientY;
     let rand = Math.floor(Math.random() * (80-10+1)) + 10
-    const fonts=["Montserrat", "Crimson Text","Open Sans","Nunito","Libre Baserville","Bitter"]
+
+    const fonts=[
+    {
+      fontFamily: "Montserrat",
+      fontWeight: 200
+    },{
+      fontFamily: "Montserrat",
+      fontWeight: 200
+    },{
+      fontFamily: "Montserrat",
+      fontWeight: 400
+    },{
+      fontFamily: "Montserrat",
+      fontWeight: 400
+    },{
+      fontFamily: "Montserrat",
+      fontWeight: 800
+    },{
+      fontFamily: "Crimson Text",
+      fontWeight: 400
+    },{
+      fontFamily: "Open Sans",
+      fontWeight: 400
+    },{
+      fontFamily: "Nunito",
+      fontWeight: 200
+    },{
+      fontFamily: "Nunito",
+      fontWeight: 400
+    },{
+      fontFamily: "Libre Baskerville",
+      fontWeight: 400
+    },{
+      fontFamily: "Libre Baskerville",
+      fontWeight: 700
+    },{
+      fontFamily: "Bitter",
+      fontWeight: 400
+    },{
+      fontFamily: "Bitter",
+      fontWeight: 700
+    },{
+      fontFamily: "Lobster",
+      fontWeight: 400
+    },{
+      fontFamily: "Arimo",
+      fontWeight: 400
+    },{
+      fontFamily: "Pacifico",
+      fontWeight: 400
+    }]
+
     let fontrand=Math.floor(Math.random() * (fonts.length))
-    console.log(fonts[fontrand])
+    let fontchoice=fonts[fontrand]
+
     this.props.store.dispatch({
       type: "ADD_PIN",
       pin: {
         x: x,
         y: y,
         fontSize: rand,
-        fontFamily: fonts[fontrand]
+        fontWeight: fontchoice.fontWeight,
+        opacity: Math.random(),
+        fontFamily: fontchoice.fontFamily
       }
     })
   }
@@ -58,6 +112,8 @@ class Notepad extends Component{
                 x={pin.x}
                 y={pin.y}
                 id={pin.id}
+                opacity={pin.opacity}
+                fontWeight={pin.fontWeight}
                 fontSize={pin.fontSize}
                 fontFamily={pin.fontFamily}
                 store={this.props.store}

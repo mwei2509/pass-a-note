@@ -61,9 +61,12 @@ export default class Pin extends Component{
       background: "none",
       border: "none",
       fontFamily: this.props.fontFamily,
+      fontWeight: this.props.fontWeight,
       lineHeight: .95,
       fontSize: this.props.fontSize + "px",
-      resize: "none"
+      resize: "none",
+      opacity: (this.props.opacity+.2),
+      textShadow: "1px 1px 1px rgba(0,0,0,0.2)"
     }
 
     let buttonStyle={
