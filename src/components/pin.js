@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import Draggable from 'react-draggable'
 import Textarea from 'react-textarea-autosize';
+import FontAwesome from 'react-fontawesome'
 
 
 export default class Pin extends Component{
@@ -51,12 +52,12 @@ export default class Pin extends Component{
     }),200)
   }
 
-  deletePin(){
-    this.props.store.dispatch({
-      type: "DELETE_PIN",
-      id: this.props.id
-    })
-  }
+  // deletePin(){
+  //   this.props.store.dispatch({
+  //     type: "DELETE_PIN",
+  //     id: this.props.id
+  //   })
+  // }
 
   hidePin(){
     this.setState({
@@ -82,7 +83,11 @@ export default class Pin extends Component{
       position: "absolute",
       bottom: -10,
       left: 0,
-      width: 15
+      width: "100%",
+      textAlign: "left",
+      background: "rgba(255,255,255,0.3)",
+      // padding: "0 0 3px 5px",
+      borderTop: this.state.focus ? "1px solid rgba(0,0,0,0.3)" : "none"
     }
 
     const inputStyle={
@@ -96,8 +101,7 @@ export default class Pin extends Component{
       fontSize: this.props.fontSize + "px",
       resize: "none",
       opacity: (this.props.opacity+.2),
-      textShadow: "1px 1px 1px rgba(0,0,0,0.2)",
-      borderBottom: this.state.focus ? "1px solid rgba(0,0,0,0.3)" : "none"
+      textShadow: "1px 1px 1px rgba(0,0,0,0.2)"
     }
 
     let buttonStyle={
@@ -105,8 +109,7 @@ export default class Pin extends Component{
       border: "none",
       outline: "none",
       margin: 0,
-      padding: 0,
-      opacity: 0.3
+      padding: 0
     }
 
     return(
@@ -122,13 +125,22 @@ export default class Pin extends Component{
         onDrag={this.handleDrag, (e)=>this.onFocus(e)}
         onStop={this.handleStop, (e)=>this.onBlur(e)}>
       <div className={this.state.hide ? "hide" : null} ref={this.props.id} id="main" style={style}>
-          <div style={operations}><button
+          <div style={operations} className="handle"><button
             className={this.state.focus ? null : "hide"}
             style={buttonStyle}
-            onClick={this.hidePin.bind(this)}>x</button>
+            onClick={this.hidePin.bind(this)}>
+            <FontAwesome
+                name='window-close'
+                size='1x'
+              /></button>
           <button
             className={this.state.focus ? "handle": "handle hide"}
-            style={buttonStyle}>o</button></div>
+            style={{...buttonStyle,float: "right"}}>
+            <FontAwesome
+                name='arrows'
+                size='1x'
+              />
+            </button></div>
         <Textarea autoFocus
           type="text"
           style={inputStyle}
@@ -136,7 +148,7 @@ export default class Pin extends Component{
           onBlur={(e)=>this.onBlur(e)}
           onChange={(e)=>this.onChange(e)}
           onFocus={(e)=>this.onFocus(e)}
-          cols={this.props.max ? this.props.max * 1.1:1 }
+          cols={this.props.max ? this.props.max +2:1 }
           />
       </div>
     </Draggable>
