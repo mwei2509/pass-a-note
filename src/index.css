@@ -1,5 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Crimson+Text');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+@import url('https://fonts.googleapis.com/css?family=Bitter');
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+.hide{
+  display: none
+}
+
+.paper{
+  background: #EFF5F1;
+  background: linear-gradient(150deg, #FFFFCE, #DDF3F5);
 }

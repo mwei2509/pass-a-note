@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Pin from './pin'
+import ReactDOM from 'react-dom'
+import Draggable from 'react-draggable'
+import {connect} from 'react-redux'
 
-export default class Notepad extends Component{
+class Notepad extends Component{
   constructor(){
     super()
     this.state={
@@ -10,17 +13,22 @@ export default class Notepad extends Component{
   }
 
   clickPaper(e){
+    e.preventDefault()
     let x = e.clientX;
     let y = e.clientY;
+    let rand = Math.floor(Math.random() * (80-10+1)) + 10
+
+    const fonts=["Montserrat", "Crimson Text","Open Sans","Nunito","Libre Baserville","Bitter"]
+    let fontrand=Math.floor(Math.random() * (fonts.length))
+    console.log(fonts[fontrand])
     this.props.store.dispatch({
       type: "ADD_PIN",
-      coord: {
+      pin: {
         x: x,
-        y: y
+        y: y,
+        fontSize: rand,
+        fontFamily: fonts[fontrand]
       }
-    })
-    this.setState({
-      counter: this.state.counter + 1
     })
   }
 
@@ -28,20 +36,36 @@ export default class Notepad extends Component{
     const style={
       height: "100vh",
       width: "100vw",
-      background: "#eee"
+      overflow: "hidden",
+      zIndex: -1,
+      userSelect:"none"
     }
 
-    let pins=this.props.store.getState().coords.map((pin, index)=>{
+    let pins=this.props.pins.map((pin, index)=>{
       return (<Pin
                 key={index}
                 x={pin.x}
                 y={pin.y}
+                id={pin.id}
+                fontSize={pin.fontSize}
+                fontFamily={pin.fontFamily}
+                store={this.props.store}
                  />)
     })
     return(
-      <div className="paper" style={style} onClick={(e)=>this.clickPaper(e)}>
+
+      <div
+        className="paper"
+        style={style}
+        onDoubleClick={(e)=>this.clickPaper(e)}>
         {pins}
       </div>
     )
   }
 }
+
+function mapStateToProps(state) {
+   return { pins: state.pins };
+}
+
+export default connect(mapStateToProps)(Notepad);
