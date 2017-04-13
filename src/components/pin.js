@@ -55,8 +55,8 @@ export default class Pin extends Component{
     }
     let operations={
       position: "absolute",
-      top: 0,
-      left: -15,
+      bottom: -10,
+      left: 0,
       width: 15
     }
 
@@ -71,7 +71,8 @@ export default class Pin extends Component{
       fontSize: this.props.fontSize + "px",
       resize: "none",
       opacity: (this.props.opacity+.2),
-      textShadow: "1px 1px 1px rgba(0,0,0,0.2)"
+      textShadow: "1px 1px 1px rgba(0,0,0,0.2)",
+      borderBottom: this.state.focus ? "1px solid rgba(0,0,0,0.3)" : "none"
     }
 
     let buttonStyle={
@@ -80,7 +81,7 @@ export default class Pin extends Component{
       outline: "none",
       margin: 0,
       padding: 0,
-      display: "block"
+      opacity: 0.3
     }
 
     return(
@@ -92,8 +93,8 @@ export default class Pin extends Component{
         position={null}
         grid={[1, 1]}
         onStart={this.handleStart}
-        onDrag={this.handleDrag}
-        onStop={this.handleStop}>
+        onDrag={this.handleDrag, (e)=>this.onFocus(e)}
+        onStop={this.handleStop, (e)=>this.onBlur(e)}>
       <div style={style}>
           <div style={operations}><button
             className={this.state.focus ? null : "hide"}
@@ -109,7 +110,7 @@ export default class Pin extends Component{
           onBlur={(e)=>this.onBlur(e)}
           onChange={(e)=>this.onChange(e)}
           onFocus={(e)=>this.onFocus(e)}
-          cols={this.props.max ? this.props.max+3:1}
+          cols={this.props.max ? this.props.max:1}
           />
       </div>
     </Draggable>
