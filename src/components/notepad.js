@@ -7,9 +7,6 @@ import {connect} from 'react-redux'
 class Notepad extends Component{
   constructor(){
     super()
-    this.state={
-      counter: 0
-    }
   }
 
   clickPaper(e){
@@ -17,7 +14,6 @@ class Notepad extends Component{
     let x = e.clientX;
     let y = e.clientY;
     let rand = Math.floor(Math.random() * (80-10+1)) + 10
-
     const fonts=["Montserrat", "Crimson Text","Open Sans","Nunito","Libre Baserville","Bitter"]
     let fontrand=Math.floor(Math.random() * (fonts.length))
     console.log(fonts[fontrand])
@@ -32,6 +28,21 @@ class Notepad extends Component{
     })
   }
 
+  intro(){
+    const style={
+      paddingTop: 50,
+      opacity: .2,
+      textAlign: "Center",
+      fontFamily: "Libre Baskerville",
+      fontSize: 70,
+      margin:"auto"
+    }
+    return(
+      <div style={style}>
+        Double click to type <br />anywhere on the page.
+      </div>
+    )
+  }
   render(){
     const style={
       height: "100vh",
@@ -58,6 +69,7 @@ class Notepad extends Component{
         className="paper"
         style={style}
         onDoubleClick={(e)=>this.clickPaper(e)}>
+        {(pins.length >= 1) ? null : this.intro()}
         {pins}
       </div>
     )
