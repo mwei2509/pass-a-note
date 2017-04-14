@@ -52,12 +52,12 @@ export default class Pin extends Component{
     }),200)
   }
 
-  // deletePin(){
-  //   this.props.store.dispatch({
-  //     type: "DELETE_PIN",
-  //     id: this.props.id
-  //   })
-  // }
+  deletePin(){
+    this.props.store.dispatch({
+      type: "DELETE_PIN",
+      id: this.props.id
+    })
+  }
 
   hidePin(){
     this.setState({
@@ -74,15 +74,13 @@ export default class Pin extends Component{
       }
     }
     const style={
-      position: 'fixed',
-      top: this.props.y,
-      left: this.props.x
+      position: 'absolute',
+      top: 0,
+      left: 0
     }
 
     let operations={
-      position: "absolute",
-      bottom: -10,
-      left: 0,
+      position: "relative",
       width: "100%",
       textAlign: "left",
       background: "rgba(255,255,255,0.3)",
@@ -95,6 +93,7 @@ export default class Pin extends Component{
       background: "none",
       border: "none",
       color: "#1D0F29",
+      paddingLeft: 10,
       fontFamily: this.props.fontFamily,
       fontWeight: this.props.fontWeight,
       lineHeight: .95,
@@ -108,7 +107,8 @@ export default class Pin extends Component{
       background: "none",
       border: "none",
       outline: "none",
-      margin: 0,
+      color: "rgba(0,0,0,0.5)",
+      margin: "5px 5px 5px 5px",
       padding: 0
     }
 
@@ -119,16 +119,25 @@ export default class Pin extends Component{
         handle=".handle"
         defaultPosition={{x: 0, y: 0}}
         zIndex={100}
-        position={null}
+        position={{x: this.props.x, y: this.props.y}}
         grid={[1, 1]}
         onStart={this.handleStart}
         onDrag={this.handleDrag, (e)=>this.onFocus(e)}
-        onStop={this.handleStop, (e)=>this.onBlur(e)}>
-      <div className={this.state.hide ? "hide" : null} ref={this.props.id} id="main" style={style}>
+        onStop={this.handleStop, (e)=>this.onBlur(e), this.getCoords.bind(this)}>
+      <div className={this.state.hide ? "hide" : null} style={{position: "absolute", top: 0, left: 0}} ref={this.props.id}>
+        <Textarea autoFocus
+          type="text"
+          style={inputStyle}
+          value={this.props.text}
+          onBlur={(e)=>this.onBlur(e)}
+          onChange={(e)=>this.onChange(e)}
+          onFocus={(e)=>this.onFocus(e)}
+          cols={this.props.max ? this.props.max +2:1 }
+          />
           <div style={operations} className="handle"><button
             className={this.state.focus ? null : "hide"}
             style={buttonStyle}
-            onClick={this.hidePin.bind(this)}>
+            onClick={this.deletePin.bind(this)}>
             <FontAwesome
                 name='window-close'
                 size='1x'
@@ -141,16 +150,8 @@ export default class Pin extends Component{
                 size='1x'
               />
             </button></div>
-        <Textarea autoFocus
-          type="text"
-          style={inputStyle}
-          value={this.props.text}
-          onBlur={(e)=>this.onBlur(e)}
-          onChange={(e)=>this.onChange(e)}
-          onFocus={(e)=>this.onFocus(e)}
-          cols={this.props.max ? this.props.max +2:1 }
-          />
       </div>
+
     </Draggable>
     )
 

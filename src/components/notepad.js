@@ -113,6 +113,7 @@ class Notepad extends Component{
     const style={
       height: "100vh",
       width: "100vw",
+      position: "absolute",
       overflow: "hidden",
       zIndex: -1,
       userSelect:"none"
