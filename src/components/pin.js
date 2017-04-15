@@ -37,6 +37,7 @@ export default class Pin extends Component{
       type: "MOVE_PIN",
       pin: {id: this.props.id, x: div.getBoundingClientRect().left, y: div.getBoundingClientRect().top}
     })
+    this.onBlur()
 
   }
 
@@ -118,12 +119,13 @@ export default class Pin extends Component{
         axis="both"
         handle=".handle"
         defaultPosition={{x: 0, y: 0}}
-        zIndex={100}
+        zIndex={10}
         position={{x: this.props.x, y: this.props.y}}
         grid={[1, 1]}
         onStart={this.handleStart}
         onDrag={this.handleDrag, (e)=>this.onFocus(e)}
-        onStop={this.handleStop, (e)=>this.onBlur(e), this.getCoords.bind(this)}>
+        onStop={this.handleStop, this.getCoords.bind(this)}
+          >
       <div className={this.state.hide ? "hide" : null} style={{position: "absolute", top: 0, left: 0}} ref={this.props.id}>
         <Textarea autoFocus
           type="text"
@@ -134,7 +136,7 @@ export default class Pin extends Component{
           onFocus={(e)=>this.onFocus(e)}
           cols={this.props.max ? this.props.max +2:1 }
           />
-          <div style={operations} className="handle"><button
+        <div style={operations} className="handle"><button
             className={this.state.focus ? null : "hide"}
             style={buttonStyle}
             onClick={this.deletePin.bind(this)}>

@@ -20,6 +20,5 @@ body {
 }
 
 .paper{
-  background: #FFE5DA;
-  background: linear-gradient(130deg, #F8E8E4, #FBFBEC);
+  /*background: linear-gradient(130deg, #F8E8E4, #FBFBEC);*/
 }

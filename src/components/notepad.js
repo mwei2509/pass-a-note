@@ -3,10 +3,22 @@ import Pin from './pin'
 import ReactDOM from 'react-dom'
 import Draggable from 'react-draggable'
 import {connect} from 'react-redux'
+import {Sidebar} from './sidebar.js'
 
 class Notepad extends Component{
   constructor(){
     super()
+
+    this.state = {
+      background: "linear-gradient(130deg, #F8E8E4, #FBFBEC)"
+    }
+  }
+
+  changeBackground(color){
+    console.log("hid")
+    this.setState({
+      background: color.hex
+    })
   }
 
   clickPaper(e){
@@ -115,7 +127,6 @@ class Notepad extends Component{
       width: "100vw",
       position: "absolute",
       overflow: "hidden",
-      zIndex: -1,
       userSelect:"none"
     }
 
@@ -135,13 +146,15 @@ class Notepad extends Component{
                  />)
     })
     return(
-
-      <div
-        className="paper"
-        style={style}
-        onDoubleClick={(e)=>this.clickPaper(e)}>
-        {(pins.length >= 1) ? null : this.intro()}
-        {pins}
+      <div style={style}>
+        
+        <div
+          className="paper"
+          style={{...style,background: this.state.background}}
+          onDoubleClick={(e)=>this.clickPaper(e)}>
+          {(pins.length >= 1) ? null : this.intro()}
+          {pins}
+        </div>
       </div>
     )
   }
