@@ -1,23 +1,36 @@
 import React, { Component } from 'react';
 import Pin from './pin'
-import ReactDOM from 'react-dom'
-import Draggable from 'react-draggable'
 import {connect} from 'react-redux'
 import {Sidebar} from './sidebar.js'
+import {fonts} from '../resources/constants'
 
 class Notepad extends Component{
   constructor(){
     super()
-
     this.state = {
-      background: "linear-gradient(130deg, #F8E8E4, #FBFBEC)"
+      background: "linear-gradient(130deg, #F8E8E4, #FBFBEC)",
+      bgdeg: 130,
+      bg1: "#F8E8E4",
+      bg2: "#FBFBEC"
     }
   }
 
-  changeBackground(color){
-    console.log("hid")
+  changeBackground(select, color){
+    if (select==0){
+      this.setState({
+        bg1: color.hex,
+        bg2: color.hex
+      })
+    }else{
+      this.setState({
+        [`bg${select}`]: color.hex
+      })
+    }
+  }
+
+  changeDegrees(deg){
     this.setState({
-      background: color.hex
+      bgdeg: deg
     })
   }
 
@@ -26,57 +39,6 @@ class Notepad extends Component{
     let x = e.clientX;
     let y = e.clientY;
     let rand = Math.floor(Math.random() * (80-10+1)) + 10
-
-    const fonts=[
-    {
-      fontFamily: "Montserrat",
-      fontWeight: 200
-    },{
-      fontFamily: "Montserrat",
-      fontWeight: 200
-    },{
-      fontFamily: "Montserrat",
-      fontWeight: 400
-    },{
-      fontFamily: "Montserrat",
-      fontWeight: 400
-    },{
-      fontFamily: "Montserrat",
-      fontWeight: 800
-    },{
-      fontFamily: "Crimson Text",
-      fontWeight: 400
-    },{
-      fontFamily: "Open Sans",
-      fontWeight: 400
-    },{
-      fontFamily: "Nunito",
-      fontWeight: 200
-    },{
-      fontFamily: "Nunito",
-      fontWeight: 400
-    },{
-      fontFamily: "Libre Baskerville",
-      fontWeight: 400
-    },{
-      fontFamily: "Libre Baskerville",
-      fontWeight: 700
-    },{
-      fontFamily: "Bitter",
-      fontWeight: 400
-    },{
-      fontFamily: "Bitter",
-      fontWeight: 700
-    },{
-      fontFamily: "Lobster",
-      fontWeight: 400
-    },{
-      fontFamily: "Arimo",
-      fontWeight: 400
-    },{
-      fontFamily: "Pacifico",
-      fontWeight: 400
-    }]
 
     let fontrand=Math.floor(Math.random() * (fonts.length))
     let fontchoice=fonts[fontrand]
@@ -110,11 +72,6 @@ class Notepad extends Component{
       fontSize: 80,
     }
 
-    const mont={
-      fontFamily: "Montserrat",
-      fontWeight: 200,
-      fontSize: 60
-    }
     return(
       <div style={style}>
         <span style={crim}>pass a note by double clicking <br />anywhere on the page</span>
@@ -133,24 +90,21 @@ class Notepad extends Component{
     let pins=this.props.pins.map((pin, index)=>{
       return (<Pin
                 key={index}
-                x={pin.x}
-                y={pin.y}
-                id={pin.id}
-                text={pin.text}
-                max={pin.max}
-                opacity={pin.opacity}
-                fontWeight={pin.fontWeight}
-                fontSize={pin.fontSize}
-                fontFamily={pin.fontFamily}
+                pin={pin}
                 store={this.props.store}
                  />)
     })
     return(
       <div style={style}>
-        
+        <Sidebar
+          store={this.props.store}
+          ogBackground="#F8E8E4"
+          changeBackground={this.changeBackground.bind(this)}
+          changeDegrees={this.changeDegrees.bind(this)}
+          />
         <div
           className="paper"
-          style={{...style,background: this.state.background}}
+          style={{...style,background: `linear-gradient(${this.state.bgdeg}deg, ${this.state.bg1}, ${this.state.bg2})`}}
           onDoubleClick={(e)=>this.clickPaper(e)}>
           {(pins.length >= 1) ? null : this.intro()}
           {pins}
