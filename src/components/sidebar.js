@@ -9,7 +9,7 @@ export class Sidebar extends Component{
     this.state={
       colorOn: false,
       gradient: 1,
-      bgselect: 0,
+      bgselect: 1,
       currentbg: this.props.ogBackground
     }
   }
@@ -61,46 +61,44 @@ export class Sidebar extends Component{
       padding: 5
     }
 
+    const colorPicker = (<div style={bgSelect}>
+      <span style={{float: "right", padding: 5}} onClick={this.toggleColor.bind(this)}>
+        <FontAwesome name='window-close' />
+      </span>
+      Background Color:
+      <input type="range" onChange={this.degreeSlider.bind(this)} min="-180" max="180" step="5"/><br />
+      <input type="radio" name="bg1" value={0} checked={this.state.bgselect==0} onChange={this.bgSelect.bind(this)}/>flat
+      <input type="radio" name="bg1" value={1} checked={this.state.bgselect==1} onChange={this.bgSelect.bind(this)}/>bg1
+      <input type="radio" name="bg1" value={2} checked={this.state.bgselect==2} onChange={this.bgSelect.bind(this)}/>bg2<br />
+
+      <ChromePicker
+        color={this.state.currentbg}
+        disableAlpha={true}
+        onChange={ this.pickColor.bind(this) }
+        onChangeComplete={ this.pickColor.bind(this) }
+         />
+     </div>)
+
     return(
       <div style={style}>
         <FontAwesome
-            name='floppy-o'
-            style={icons}
-          />
+          name='floppy-o'
+          style={icons}
+        />
         <FontAwesome
-            name='telegram'
-            style={icons}
-          />
-          <FontAwesome
-              name='download'
-              style={icons}
-            />
-          <FontAwesome
-              name='paint-brush'
-              onClick={this.toggleColor.bind(this)}
-              style={icons}
-            />
-          <div style={bgSelect} className={this.state.colorOn ? null : "hide"}>
-            <span style={{float: "right", padding: 5}} onClick={this.toggleColor.bind(this)}>
-              <FontAwesome name='window-close' />
-            </span>
-            Background Color:
-            <input type="range" onChange={this.degreeSlider.bind(this)} min="-180" max="180" step="5"/><br />
-            <input type="radio" name="bg1" value={0} checked={this.state.bgselect==0} onChange={this.bgSelect.bind(this)}/>flat
-            <input type="radio" name="bg1" value={1} checked={this.state.bgselect==1} onChange={this.bgSelect.bind(this)}/>bg1
-            <input type="radio" name="bg1" value={2} checked={this.state.bgselect==2} onChange={this.bgSelect.bind(this)}/>bg2<br />
-
-            <ChromePicker
-              color={this.state.currentbg}
-              disableAlpha={true}
-              onChange={ this.pickColor.bind(this) }
-              onChangeComplete={ this.pickColor.bind(this) }
-               />
-            </div>
-            <FontAwesome
-                name='text-width'
-                style={icons}
-              />
+          name='telegram'
+          style={icons}
+        />
+        <FontAwesome
+          name='download'
+          style={icons}
+        />
+        <FontAwesome
+          name='paint-brush'
+          onClick={this.toggleColor.bind(this)}
+          style={icons}
+        />
+        {this.state.colorOn ? colorPicker : null}
       </div>
     )
   }

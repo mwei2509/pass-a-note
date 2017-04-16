@@ -51,7 +51,8 @@ class Notepad extends Component{
         fontSize: rand,
         fontWeight: fontchoice.fontWeight,
         opacity: Math.random(),
-        fontFamily: fontchoice.fontFamily
+        fontFamily: fontchoice.fontFamily,
+        focus: true
       }
     })
   }

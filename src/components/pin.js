@@ -9,9 +9,7 @@ export default class Pin extends Component{
     super()
     this.state={
       text: '',
-      max: 0,
-      focus: false,
-      hide: false
+      max: 0
     }
   }
 
@@ -20,11 +18,14 @@ export default class Pin extends Component{
     let max = Math.max(...lines)
     this.setState({
       text:e.target.value,
-      max: max,
-      focus: true
+      max: max
     },()=>{this.props.store.dispatch({
       type: "UPDATE_TEXT",
-      pin: {id: this.props.pin.id, text: this.state.text, max: this.state.max}
+      pin: {
+        id: this.props.pin.id,
+        text: this.state.text,
+        max: this.state.max
+      }
     })
   })
   }
@@ -36,20 +37,37 @@ export default class Pin extends Component{
       type: "MOVE_PIN",
       pin: {id: this.props.pin.id, x: div.getBoundingClientRect().left, y: div.getBoundingClientRect().top}
     })
-    this.onBlur()
+    // this.onBlur()
 
   }
 
   onFocus(e){
-    this.setState({
-      focus: true
+    this.props.store.dispatch({
+      type: "UPDATE_TEXT",
+      pin: {
+        id: this.props.pin.id,
+        focus: true
+      }
     })
   }
 
   onBlur(e){
-    setTimeout(()=>this.setState({
-      focus: false
-    }),200)
+    let currentTarget=e.currentTarget
+    setTimeout(()=>{
+      console.log(document.activeElement)
+      console.log(currentTarget)
+      console.log("-----")
+      if(!currentTarget.contains(document.activeElement)){
+        this.props.store.dispatch({
+          type: "UPDATE_TEXT",
+          pin: {
+            id: this.props.pin.id,
+            focus: false
+          }
+        })
+
+      }
+    },100)
   }
 
   deletePin(){
@@ -59,12 +77,6 @@ export default class Pin extends Component{
     })
   }
 
-  // hidePin(){
-  //   this.setState({
-  //     hide: true
-  //   })
-  // }
-
   render(){
 
     const inputStyle={
@@ -72,6 +84,7 @@ export default class Pin extends Component{
       background: "none",
       border: "none",
       color: "#1D0F29",
+      width: "100%",
       paddingLeft: 10,
       fontFamily: this.props.pin.fontFamily,
       fontWeight: this.props.pin.fontWeight,
@@ -91,23 +104,28 @@ export default class Pin extends Component{
         position={{x: this.props.pin.x, y: this.props.pin.y}}
         grid={[1, 1]}
         onStart={this.handleStart}
-        onDrag={(e)=>this.onFocus(e)}
         onStop={this.getCoords.bind(this)}
-          >
-      <div className={this.state.hide ? "hide" : null} style={{position: "absolute", top: 0, left: 0}} ref={this.props.pin.id}>
+        >
+      <div tabIndex={1}
+        style={{position: "absolute", top: 0, left: 0, outline: "none"}}
+        ref={this.props.pin.id}
+        onFocus={this.onFocus.bind(this)}
+        onBlur={this.onBlur.bind(this)}
+        >
         <Textarea autoFocus
           type="text"
           style={inputStyle}
           value={this.props.pin.text}
-          onBlur={(e)=>this.onBlur(e)}
-          onChange={(e)=>this.onChange(e)}
-          onFocus={(e)=>this.onFocus(e)}
-          cols={this.props.pin.max ? this.props.pin.max +2:1 }
+          onChange={this.onChange.bind(this)}
+          cols={this.props.pin.max ? this.props.pin.max:1 }
           />
-        <Operations
-          focus={this.state.focus}
-          deletePin={this.deletePin.bind(this)}
-          />
+        <div className={this.props.pin.focus ? null : "hide"}>
+          <Operations
+            deletePin={this.deletePin.bind(this)}
+            store={this.props.store}
+            pin={this.props.pin}
+            />
+        </div>
       </div>
 
     </Draggable>

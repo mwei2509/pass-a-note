@@ -8,7 +8,7 @@ export default function makePins(state={pins: []}, action){
     case 'UPDATE_TEXT':
     let newstate = Object.assign({}, state, {pins: state.pins.map(pin=>{
       if (pin.id===action.pin.id){
-        return Object.assign({}, pin, {text: action.pin.text, max: action.pin.max})
+        return Object.assign({}, pin, action.pin)
       }else{
         return pin
       }
@@ -17,8 +17,6 @@ export default function makePins(state={pins: []}, action){
     case 'MOVE_PIN':
       let newState = Object.assign({}, state, {pins: state.pins.map(pin=>{
         if (pin.id === action.pin.id){
-          console.log(`old - x: ${pin.x}, y: ${pin.y}`)
-          console.log(`new - x: ${action.pin.x}, y: ${action.pin.y}`)
           return Object.assign({}, pin, {x: action.pin.x, y: action.pin.y})
         }else{
           return pin

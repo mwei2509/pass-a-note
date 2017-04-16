@@ -4,12 +4,6 @@ export const fonts = [
   fontWeight: 200
 },{
   fontFamily: "Montserrat",
-  fontWeight: 200
-},{
-  fontFamily: "Montserrat",
-  fontWeight: 400
-},{
-  fontFamily: "Montserrat",
   fontWeight: 400
 },{
   fontFamily: "Montserrat",
