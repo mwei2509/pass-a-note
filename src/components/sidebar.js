@@ -58,7 +58,7 @@ export class Sidebar extends Component{
       top: 50,
       left: 50,
       fontSize: "10px",
-      padding: 5
+      boxShadow: "1px 1px 1px rbga(0,0,0,0.5)"
     }
 
     const colorPicker = (<div style={bgSelect}>
@@ -94,7 +94,7 @@ export class Sidebar extends Component{
           style={icons}
         />
         <FontAwesome
-          name='paint-brush'
+          name='sliders'
           onClick={this.toggleColor.bind(this)}
           style={icons}
         />

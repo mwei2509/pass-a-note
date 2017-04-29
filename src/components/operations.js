@@ -26,7 +26,7 @@ export class Operations extends Component{
       operation: false
     })
     this.props.store.dispatch({
-      type: "UPDATE_TEXT",
+      type: "UPDATE_PIN",
       pin: {
         id: this.props.pin.id,
         fontFamily: fontFamily,
@@ -43,7 +43,7 @@ export class Operations extends Component{
 
   changeSize(){
     this.props.store.dispatch({
-      type: "UPDATE_TEXT",
+      type: "UPDATE_PIN",
       pin: {
         id: this.props.pin.id,
         fontSize: this.state.fontSize

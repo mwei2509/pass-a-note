@@ -20,7 +20,7 @@ export default class Pin extends Component{
       text:e.target.value,
       max: max
     },()=>{this.props.store.dispatch({
-      type: "UPDATE_TEXT",
+      type: "UPDATE_PIN",
       pin: {
         id: this.props.pin.id,
         text: this.state.text,
@@ -43,7 +43,7 @@ export default class Pin extends Component{
 
   onFocus(e){
     this.props.store.dispatch({
-      type: "UPDATE_TEXT",
+      type: "UPDATE_PIN",
       pin: {
         id: this.props.pin.id,
         focus: true
@@ -59,7 +59,7 @@ export default class Pin extends Component{
       console.log("-----")
       if(!currentTarget.contains(document.activeElement)){
         this.props.store.dispatch({
-          type: "UPDATE_TEXT",
+          type: "UPDATE_PIN",
           pin: {
             id: this.props.pin.id,
             focus: false

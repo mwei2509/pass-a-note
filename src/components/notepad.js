@@ -9,7 +9,6 @@ class Notepad extends Component{
     super()
     this.state = {
       background: "linear-gradient(130deg, #F8E8E4, #FBFBEC)",
-      bgdeg: 130,
       bg1: "#F8E8E4",
       bg2: "#FBFBEC"
     }
@@ -29,8 +28,11 @@ class Notepad extends Component{
   }
 
   changeDegrees(deg){
-    this.setState({
-      bgdeg: deg
+    this.props.store.dispatch({
+      type: "UPDATE_PAPER",
+      paper: {
+        bgdeg: deg
+      }
     })
   }
 
@@ -95,6 +97,8 @@ class Notepad extends Component{
                 store={this.props.store}
                  />)
     })
+
+
     return(
       <div style={style}>
         <Sidebar
@@ -105,7 +109,7 @@ class Notepad extends Component{
           />
         <div
           className="paper"
-          style={{...style,background: `linear-gradient(${this.state.bgdeg}deg, ${this.state.bg1}, ${this.state.bg2})`}}
+          style={{...style,background: `linear-gradient(${this.props.paper.bgdeg}deg, ${this.state.bg1}, ${this.state.bg2})`}}
           onDoubleClick={(e)=>this.clickPaper(e)}>
           {(pins.length >= 1) ? null : this.intro()}
           {pins}
@@ -116,7 +120,10 @@ class Notepad extends Component{
 }
 
 function mapStateToProps(state) {
-   return { pins: state.pins };
+  return {
+    paper: state.paper,
+    pins: state.pins.pins
+  };
 }
 
 export default connect(mapStateToProps)(Notepad);

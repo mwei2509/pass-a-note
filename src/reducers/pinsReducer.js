@@ -1,11 +1,11 @@
 let id = 0
-export default function makePins(state={pins: []}, action){
+export default function pinsReducer(state={pins: []}, action){
   switch(action.type){
     case 'ADD_PIN':
       id++
       let pin = {...action.pin, id: id}
       return {pins: state.pins.concat(pin)}
-    case 'UPDATE_TEXT':
+    case 'UPDATE_PIN':
     let newstate = Object.assign({}, state, {pins: state.pins.map(pin=>{
       if (pin.id===action.pin.id){
         return Object.assign({}, pin, action.pin)
